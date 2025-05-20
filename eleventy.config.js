@@ -1,5 +1,6 @@
 import eleventyPluginBundle from "@11ty/eleventy-plugin-bundle";
 import eleventyPluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
+import { format } from "date-fns";
 
 export default function(eleventyConfig) {
   // Plugins
@@ -16,6 +17,10 @@ export default function(eleventyConfig) {
   // Custom filters
   eleventyConfig.addFilter('featured', function(collection) {
     return collection.filter(item => item.data.featured);
+  });
+
+  eleventyConfig.addFilter('date', function(date, formatStr) {
+    return format(date || new Date(), formatStr || 'yyyy');
   });
 
   // Collections
