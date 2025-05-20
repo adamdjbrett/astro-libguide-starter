@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} | LibGuides</title>
+  <meta name="description" content="{{ description or 'Library research guides and educational resources' }}">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50">
+  {% include "header.njk" %}
+  
+  <main class="flex-grow container mx-auto px-4 py-8 animate-fade-in">
+    {{ content | safe }}
+  </main>
+
+  {% include "footer.njk" %}
+</body>
+</html>
