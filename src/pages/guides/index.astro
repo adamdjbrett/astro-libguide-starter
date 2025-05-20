@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import { getAllGuides } from '../../data/guides';
+
+const guides = getAllGuides();
+const allSubjects = [...new Set(guides.flatMap(guide => guide.subject))].sort();
+---
+
+<Layout title="Research Guides" description="Browse our collection of research guides by subject, topic, or course.">
+  <div class="max-w-5xl mx-auto">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">Research Guides</h1>
+      <p class="text-xl text-gray-600">
+        Browse our collection of research guides created by librarians to help you with your research.
+      </p>
+    </header>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Filter by Subject</h2>
+      <div class="flex flex-wrap gap-2">
+        <a 
+          href="/guides" 
+          class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm hover:bg-primary-700 transition-colors"
+        >
+          All Guides
+        </a>
+        {allSubjects.map(subject => (
+          <a 
+            href={`/subjects/${subject.toLowerCase().replace(/\s+/g, '-')}`}
+            class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition-colors"
+          >
+            {subject}
+          </a>
+        ))}
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+      {guides.map((guide) => (
+        <GuideCard 
+          id={guide.id}
+          title={guide.title}
+          description={guide.description}
+          subject={guide.subject}
+          dateUpdated={guide.dateUpdated}
+          librarianId={guide.librarianId}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>

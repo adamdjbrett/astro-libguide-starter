@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About LibGuides" description="Learn about our LibGuides platform and how it can help with your research.">
+  <div class="max-w-4xl mx-auto">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">About LibGuides</h1>
+      <p class="text-xl text-gray-600">
+        Our mission is to provide high-quality research guides and educational resources to support academic success.
+      </p>
+    </header>
+    
+    <section class="bg-white rounded-lg shadow-md p-8 mb-8">
+      <div class="prose max-w-none">
+        <h2>What are LibGuides?</h2>
+        <p>
+          LibGuides are curated research guides created by librarians to help students, faculty, and researchers 
+          navigate the complex world of research and information resources. These guides are designed to provide 
+          targeted help for specific subjects, courses, or research topics.
+        </p>
+        
+        <p>
+          Each guide contains carefully selected resources, tips for effective research, and contact information 
+          for librarians who can provide additional assistance. Our LibGuides platform is constantly evolving to 
+          meet the changing needs of our academic community.
+        </p>
+        
+        <h2>How to Use LibGuides</h2>
+        <p>
+          LibGuides can be used in various ways depending on your research needs:
+        </p>
+        
+        <ul>
+          <li><strong>Starting a research project:</strong> Find recommended databases, books, and journals for your topic.</li>
+          <li><strong>Course-specific research:</strong> Look for guides tailored to your course requirements.</li>
+          <li><strong>Citation help:</strong> Learn how to properly cite sources in different formats.</li>
+          <li><strong>Research methods:</strong> Discover strategies for effective research in your field.</li>
+          <li><strong>Data management:</strong> Find resources for organizing and managing research data.</li>
+        </ul>
+        
+        <h2>Our Team</h2>
+        <p>
+          Our LibGuides are created and maintained by a team of experienced librarians with expertise in various 
+          disciplines. Each librarian brings specialized knowledge in their subject areas and is committed to 
+          helping users find the information they need.
+        </p>
+        
+        <p>
+          Librarians regularly update guides to ensure they contain the most current and relevant resources. 
+          They are also available for consultations to provide more personalized assistance with your research.
+        </p>
+      </div>
+    </section>
+    
+    <section id="contact" class="bg-primary-50 rounded-lg shadow-md p-8 mb-8">
+      <h2 class="text-2xl font-bold text-primary-800 mb-4">Contact Us</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold text-primary-600 mb-3">Library Information</h3>
+          <address class="not-italic text-gray-700">
+            <p class="mb-2">University Library</p>
+            <p class="mb-2">1000 Campus Drive</p>
+            <p class="mb-2">Anytown, ST 12345</p>
+            <p class="mb-2">
+              <strong>Email:</strong> <a href="mailto:library@example.edu" class="text-primary-600 hover:text-primary-800">library@example.edu</a>
+            </p>
+            <p>
+              <strong>Phone:</strong> <a href="tel:+15551234567" class="text-primary-600 hover:text-primary-800">(555) 123-4567</a>
+            </p>
+          </address>
+          
+          <h3 class="text-lg font-semibold text-primary-600 mt-6 mb-3">Hours</h3>
+          <div class="grid grid-cols-2 text-sm text-gray-700">
+            <div class="py-2 border-b border-gray-200">Monday - Thursday</div>
+            <div class="py-2 border-b border-gray-200">8:00 AM - 10:00 PM</div>
+            
+            <div class="py-2 border-b border-gray-200">Friday</div>
+            <div class="py-2 border-b border-gray-200">8:00 AM - 8:00 PM</div>
+            
+            <div class="py-2 border-b border-gray-200">Saturday</div>
+            <div class="py-2 border-b border-gray-200">10:00 AM - 6:00 PM</div>
+            
+            <div class="py-2 border-b border-gray-200">Sunday</div>
+            <div class="py-2 border-b border-gray-200">12:00 PM - 8:00 PM</div>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold text-primary-600 mb-3">Send Us a Message</h3>
+          <form class="space-y-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                required
+              />
+            </div>
+            
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                required
+              />
+            </div>
+            
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+              <input 
+                type="text" 
+                id="subject" 
+                name="subject" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                required
+              />
+            </div>
+            
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="4" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                required
+              ></textarea>
+            </div>
+            
+            <button 
+              type="submit" 
+              class="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+    
+    <section class="bg-white rounded-lg shadow-md p-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+      
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">How do I request a new guide?</h3>
+          <p class="text-gray-700">
+            If you would like to request a new LibGuide for a specific subject or course, please contact the library's 
+            reference desk or email us at <a href="mailto:library@example.edu" class="text-primary-600 hover:text-primary-800">library@example.edu</a>. 
+            We'll connect you with the appropriate subject librarian.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">How often are guides updated?</h3>
+          <p class="text-gray-700">
+            LibGuides are reviewed and updated regularly to ensure they contain the most current and relevant resources. 
+            The date of the last update is displayed on each guide. If you notice outdated information, please let us know.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">Can I suggest resources for a guide?</h3>
+          <p class="text-gray-700">
+            Yes! We welcome suggestions for resources to include in our guides. Please contact the librarian listed on 
+            the guide with your recommendations.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">How do I access subscription databases from off-campus?</h3>
+          <p class="text-gray-700">
+            Most library resources can be accessed from off-campus using your university login credentials. When you click 
+            on a database link, you'll be prompted to sign in with your university ID and password.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

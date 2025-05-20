@@ -1,0 +1,297 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import ResourceBox from '../../components/ResourceBox.astro';
+import { getGuideById } from '../../data/guides';
+import { getLibrarianById } from '../../data/librarians';
+
+export async function getStaticPaths() {
+  const guides = await import('../../data/guides').then(module => module.getAllGuides());
+  
+  return guides.map(guide => ({
+    params: { id: guide.id },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+const librarian = getLibrarianById(guide.librarianId);
+
+// Example resources based on guide type
+const getResources = (guideId) => {
+  // In a real application, these would come from a database
+  if (guideId === 'research-basics') {
+    return [
+      {
+        title: "The Craft of Research",
+        type: "book",
+        author: "Wayne C. Booth, Gregory G. Colomb, Joseph M. Williams",
+        year: "2016",
+        description: "A guide to conducting research and writing a research paper.",
+        url: "#",
+        image: "https://images.pexels.com/photos/1370295/pexels-photo-1370295.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      },
+      {
+        title: "Research Methods in Library and Information Science",
+        type: "book",
+        author: "Lynn Silipigni Connaway, Marie L. Radford",
+        year: "2021",
+        description: "A comprehensive guide to research methods in library and information science.",
+        url: "#"
+      },
+      {
+        title: "PubMed",
+        type: "database",
+        description: "A database of biomedical literature, including MEDLINE, life science journals, and online books.",
+        url: "https://pubmed.ncbi.nlm.nih.gov/"
+      },
+      {
+        title: "Information Literacy in the Digital Age",
+        type: "article",
+        author: "Jane Smith",
+        year: "2024",
+        description: "An overview of information literacy skills needed in today's digital environment.",
+        url: "#"
+      }
+    ];
+  }
+  
+  // Default resources for other guides
+  return [
+    {
+      title: "JSTOR",
+      type: "database",
+      description: "Digital library of academic journals, books, and primary sources.",
+      url: "https://www.jstor.org/"
+    },
+    {
+      title: "Academic Search Complete",
+      type: "database",
+      description: "Comprehensive scholarly, multi-disciplinary database.",
+      url: "#"
+    },
+    {
+      title: "Research Methods: The Basics",
+      type: "book",
+      author: "Nicholas Walliman",
+      year: "2021",
+      description: "An introduction to the basics of research methods.",
+      url: "#"
+    }
+  ];
+};
+
+const resources = getResources(guide.id);
+---
+
+<GuideLayout 
+  title={guide.title}
+  description={guide.description}
+  subject={guide.subject}
+  dateUpdated={guide.dateUpdated}
+  librarianId={guide.librarianId}
+>
+  <section id="overview" class="mb-10">
+    <h2 class="text-2xl font-semibold text-primary-700 mb-4">Overview</h2>
+    <p class="mb-4">
+      This guide is designed to help you navigate the resources available for {guide.title.toLowerCase()}. 
+      Whether you're just getting started or looking for advanced research strategies, you'll find useful information and links here.
+    </p>
+    <p>
+      If you need additional help, don't hesitate to contact {librarian.name} at 
+      <a href={`mailto:${librarian.email}`} class="text-primary-600 hover:text-primary-800">{librarian.email}</a>.
+    </p>
+  </section>
+  
+  <section id="getting-started" class="mb-10">
+    <h2 class="text-2xl font-semibold text-primary-700 mb-4">Getting Started</h2>
+    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+      <h3 class="text-lg font-medium mb-3">Key Steps for Research in this Area</h3>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li>Define your research question or topic</li>
+        <li>Identify key terms and synonyms for your searches</li>
+        <li>Select appropriate databases and resources</li>
+        <li>Evaluate and refine your search results</li>
+        <li>Organize your sources and take effective notes</li>
+        <li>Cite your sources properly using citation management tools</li>
+      </ol>
+    </div>
+  </section>
+  
+  <section id="key-resources" class="mb-10">
+    <h2 class="text-2xl font-semibold text-primary-700 mb-4">Key Resources</h2>
+    <div class="space-y-4">
+      {resources.map(resource => (
+        <ResourceBox 
+          title={resource.title}
+          type={resource.type}
+          author={resource.author}
+          year={resource.year}
+          description={resource.description}
+          url={resource.url}
+          image={resource.image}
+        />
+      ))}
+    </div>
+  </section>
+  
+  <section id="databases" class="mb-10">
+    <h2 class="text-2xl font-semibold text-primary-700 mb-4">Recommended Databases</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+        <h3 class="text-lg font-medium text-primary-700 mb-2">JSTOR</h3>
+        <p class="text-gray-600 mb-4">Digital library of academic journals, books, and primary sources.</p>
+        <a href="#" class="text-primary-600 hover:text-primary-800 inline-flex items-center">
+          Access JSTOR
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+      
+      <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+        <h3 class="text-lg font-medium text-primary-700 mb-2">Web of Science</h3>
+        <p class="text-gray-600 mb-4">Citation index and academic database covering sciences, social sciences, and arts & humanities.</p>
+        <a href="#" class="text-primary-600 hover:text-primary-800 inline-flex items-center">
+          Access Web of Science
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+      
+      <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+        <h3 class="text-lg font-medium text-primary-700 mb-2">ProQuest Central</h3>
+        <p class="text-gray-600 mb-4">Multidisciplinary database spanning over 175 subjects.</p>
+        <a href="#" class="text-primary-600 hover:text-primary-800 inline-flex items-center">
+          Access ProQuest
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+      
+      <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+        <h3 class="text-lg font-medium text-primary-700 mb-2">IEEE Xplore</h3>
+        <p class="text-gray-600 mb-4">Digital library providing access to technical literature in engineering and technology.</p>
+        <a href="#" class="text-primary-600 hover:text-primary-800 inline-flex items-center">
+          Access IEEE Xplore
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <section id="citation-styles" class="mb-10">
+    <h2 class="text-2xl font-semibold text-primary-700 mb-4">Citation Styles</h2>
+    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+      <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium text-gray-800">Common Citation Styles</h3>
+      </div>
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <h4 class="font-medium text-gray-900 mb-2">APA</h4>
+            <p class="text-gray-600 text-sm mb-2">Used in social sciences, education, and business.</p>
+            <a href="#" class="text-primary-600 hover:text-primary-800 text-sm">APA Style Guide</a>
+          </div>
+          
+          <div>
+            <h4 class="font-medium text-gray-900 mb-2">MLA</h4>
+            <p class="text-gray-600 text-sm mb-2">Common in humanities, especially literature and language studies.</p>
+            <a href="#" class="text-primary-600 hover:text-primary-800 text-sm">MLA Style Guide</a>
+          </div>
+          
+          <div>
+            <h4 class="font-medium text-gray-900 mb-2">Chicago/Turabian</h4>
+            <p class="text-gray-600 text-sm mb-2">Used in history, arts, and some humanities.</p>
+            <a href="#" class="text-primary-600 hover:text-primary-800 text-sm">Chicago Style Guide</a>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-primary-50 rounded-lg">
+          <h4 class="font-medium text-primary-800 mb-2">Citation Management Tools</h4>
+          <ul class="list-disc pl-5 text-gray-700">
+            <li><a href="#" class="text-primary-600 hover:text-primary-800">Zotero</a> - Free, open-source citation management software</li>
+            <li><a href="#" class="text-primary-600 hover:text-primary-800">Mendeley</a> - Reference manager and academic social network</li>
+            <li><a href="#" class="text-primary-600 hover:text-primary-800">EndNote</a> - Commercial citation management software</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="help" class="mb-10">
+    <h2 class="text-2xl font-semibold text-primary-700 mb-4">Get Help</h2>
+    <div class="bg-secondary-50 rounded-lg p-6 border border-secondary-100">
+      <div class="flex flex-col md:flex-row items-start gap-6">
+        {librarian && (
+          <div class="md:w-1/3">
+            <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+              <img 
+                src={librarian.avatar} 
+                alt={librarian.name}
+                class="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+              />
+              <h3 class="text-lg font-medium text-gray-900">{librarian.name}</h3>
+              <p class="text-gray-600 mb-2">{librarian.title}</p>
+              <div class="space-y-1 text-sm">
+                <a href={`mailto:${librarian.email}`} class="text-primary-600 hover:text-primary-800 block">
+                  {librarian.email}
+                </a>
+                <a href={`tel:${librarian.phone}`} class="text-primary-600 hover:text-primary-800 block">
+                  {librarian.phone}
+                </a>
+              </div>
+              <a 
+                href={`/librarians/${librarian.id}`}
+                class="mt-3 inline-block text-sm text-primary-600 hover:text-primary-800"
+              >
+                View profile
+              </a>
+            </div>
+          </div>
+        )}
+        
+        <div class="md:w-2/3">
+          <h3 class="text-xl font-semibold text-secondary-800 mb-4">Research Support Services</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-secondary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <div>
+                <h4 class="font-medium text-gray-900">Schedule a Consultation</h4>
+                <p class="text-gray-600">Book a one-on-one meeting with a librarian to discuss your research needs.</p>
+                <a href="#" class="text-secondary-600 hover:text-secondary-800 text-sm">Book appointment</a>
+              </div>
+            </li>
+            
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-secondary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+              <div>
+                <h4 class="font-medium text-gray-900">Live Chat</h4>
+                <p class="text-gray-600">Chat with a librarian for quick questions during library hours.</p>
+                <a href="#" class="text-secondary-600 hover:text-secondary-800 text-sm">Start chat</a>
+              </div>
+            </li>
+            
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-secondary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <div>
+                <h4 class="font-medium text-gray-900">Email Reference</h4>
+                <p class="text-gray-600">Submit your research question and get a response within 24 hours.</p>
+                <a href="#" class="text-secondary-600 hover:text-secondary-800 text-sm">Send email</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</GuideLayout>

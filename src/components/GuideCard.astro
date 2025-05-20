@@ -1,0 +1,64 @@
+---
+import { getLibrarianById } from '../data/librarians';
+
+export interface Props {
+  id: string;
+  title: string;
+  description: string;
+  subject: string[];
+  dateUpdated: string;
+  librarianId: string;
+}
+
+const { id, title, description, subject, dateUpdated, librarianId } = Astro.props;
+const librarian = getLibrarianById(librarianId);
+const formattedDate = new Date(dateUpdated).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+  <div class="p-6 flex-grow">
+    <h3 class="text-xl font-semibold text-primary-700 mb-2 line-clamp-2">
+      <a href={`/guides/${id}`} class="hover:text-primary-500 transition-colors">
+        {title}
+      </a>
+    </h3>
+    
+    <p class="text-gray-600 mb-4 line-clamp-3">{description}</p>
+    
+    <div class="flex flex-wrap gap-2 mb-4">
+      {subject.slice(0, 3).map(tag => (
+        <a 
+          href={`/subjects/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+          class="bg-primary-50 text-primary-700 px-2 py-1 rounded-full text-xs hover:bg-primary-100 transition-colors"
+        >
+          {tag}
+        </a>
+      ))}
+      {subject.length > 3 && (
+        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+          +{subject.length - 3} more
+        </span>
+      )}
+    </div>
+  </div>
+  
+  <div class="px-6 pb-6 mt-auto flex justify-between items-center text-sm text-gray-500">
+    <div class="flex items-center">
+      {librarian && (
+        <>
+          <img 
+            src={librarian.avatar} 
+            alt={librarian.name} 
+            class="w-6 h-6 rounded-full mr-2"
+          />
+          <span>{librarian.name}</span>
+        </>
+      )}
+    </div>
+    <span>Updated: {formattedDate}</span>
+  </div>
+</article>
