@@ -13,6 +13,11 @@ export default function(eleventyConfig) {
   // Watch targets
   eleventyConfig.addWatchTarget("./src/styles/");
 
+  // Custom filters
+  eleventyConfig.addFilter('featured', function(collection) {
+    return collection.filter(item => item.data.featured);
+  });
+
   // Collections
   eleventyConfig.addCollection("guides", function(collectionApi) {
     return collectionApi.getFilteredByGlob("src/guides/*.md");
